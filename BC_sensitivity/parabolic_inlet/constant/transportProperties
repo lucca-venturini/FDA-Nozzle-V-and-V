@@ -1,0 +1,32 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// FDA Nozzle Benchmark - Case 1 (Re = 500, Laminar)
+// Blood analog fluid matching experimental conditions:
+//   density = 1056 kg/m³
+//   dynamic viscosity = 0.0035 Pa·s
+//   kinematic viscosity = 0.0035/1056 = 3.314e-6 m²/s
+//
+// Verification:
+//   Q = 5.20624e-6 m³/s
+//   U_throat = Q / (π × 0.002²) = 0.4143 m/s
+//   Re_throat = U × D / ν = 0.4143 × 0.004 / 3.314e-6 = 500 ✓
+
+transportModel  Newtonian;
+
+nu              3.314e-06;
+
+// ************************************************************************* //

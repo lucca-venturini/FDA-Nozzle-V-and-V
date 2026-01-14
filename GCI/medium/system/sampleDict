@@ -1,0 +1,201 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// FDA Nozzle Benchmark V&V Sampling
+// All z-locations aligned EXACTLY to experimental PIV measurement coordinates
+// Z_EXPANSION = 0.122685 m (simulation coordinate of expansion plane)
+// Experimental z is relative to expansion: sim_z = exp_z + 0.122685
+
+type            sets;
+libs            (sampling);
+
+interpolationScheme cellPoint;
+setFormat       raw;
+
+fields          ( U p );
+
+sets
+(
+    // =========================================================================
+    // CENTERLINE (z-axis, y=0)
+    // =========================================================================
+    centerline
+    {
+        type        uniform;
+        axis        z;
+        start       (0 0 0);
+        end         (0 0 0.242685);
+        nPoints     1000;
+    }
+    
+    // =========================================================================
+    // WALL PRESSURE (z-axis at outer wall, y=6mm)
+    // =========================================================================
+    wall_pressure
+    {
+        type        uniform;
+        axis        z;
+        start       (0 0.006 0.122685);
+        end         (0 0.006 0.242685);
+        nPoints     1000;
+    }
+    
+    // =========================================================================
+    // RADIAL PROFILES - Aligned to EXACT experimental z-coordinates
+    // 15 locations matching PIV measurement planes
+    // =========================================================================
+    
+    // --- UPSTREAM (Inlet region, D=12mm, radius=6mm) ---
+    radial_z_minus088   // z = -88mm, in inlet tubing
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.034685);
+        end         (0  0.006 0.034685);
+        nPoints     1000;
+    }
+    
+    radial_z_minus064   // z = -64mm, in inlet tubing
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.058685);
+        end         (0  0.006 0.058685);
+        nPoints     1000;
+    }
+    
+    // --- COLLECTOR REGION (D varies, use 8mm sampling) ---
+    radial_z_minus048   // z = -48mm, in collector (D~8mm)
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.004 0.074685);
+        end         (0  0.004 0.074685);
+        nPoints     1000;
+    }
+    
+    radial_z_minus042   // z = -42mm, in collector/throat transition
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.004 0.080685);
+        end         (0  0.004 0.080685);
+        nPoints     1000;
+    }
+    
+    // --- THROAT REGION (D=4mm, radius=2mm) ---
+    radial_z_minus020   // z = -20mm, in throat
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.002 0.102685);
+        end         (0  0.002 0.102685);
+        nPoints     1000;
+    }
+    
+    radial_z_minus008   // z = -8mm, near throat exit
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.002 0.114685);
+        end         (0  0.002 0.114685);
+        nPoints     1000;
+    }
+    
+    // --- EXPANSION REGION (D=12mm, radius=6mm) ---
+    radial_z_000   // z = 0mm, at expansion plane
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.122685);
+        end         (0  0.006 0.122685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus008   // z = +8mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.130685);
+        end         (0  0.006 0.130685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus016   // z = +16mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.138685);
+        end         (0  0.006 0.138685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus024   // z = +24mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.146685);
+        end         (0  0.006 0.146685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus032   // z = +32mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.154685);
+        end         (0  0.006 0.154685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus040   // z = +40mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.162685);
+        end         (0  0.006 0.162685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus048   // z = +48mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.170685);
+        end         (0  0.006 0.170685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus060   // z = +60mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.182685);
+        end         (0  0.006 0.182685);
+        nPoints     1000;
+    }
+    
+    radial_z_plus080   // z = +80mm
+    {
+        type        uniform;
+        axis        y;
+        start       (0 -0.006 0.202685);
+        end         (0  0.006 0.202685);
+        nPoints     1000;
+    }
+);
+
+// ************************************************************************* //

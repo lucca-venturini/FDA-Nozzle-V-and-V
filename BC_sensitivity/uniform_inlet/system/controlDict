@@ -1,0 +1,160 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// FDA Nozzle Benchmark - Case 1 (Re = 500, Laminar)
+// Steady-state simulation using simpleFoam
+
+application     simpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         5000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   1000;
+
+purgeWrite      10;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    yPlus
+    {
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+        writeControl    writeTime;
+    }
+    
+    throatVelocity
+    {
+        type            surfaceFieldValue;
+        libs            (fieldFunctionObjects);
+        writeControl    timeStep;
+        writeInterval   100;
+        log             yes;
+        writeFields     no;
+        regionType      patch;
+        name            wallThroat;
+        operation       areaAverage;
+        fields          (U);
+    }
+    
+    sampleSets
+    {
+        type            sets;
+        libs            (sampling);
+        writeControl    writeTime;
+        interpolationScheme cellPoint;
+        setFormat       raw;
+        fields          ( U p );
+        
+        sets
+        (
+            centerline
+            {
+                type        uniform;
+                axis        z;
+                start       (0 0 0);
+                end         (0 0 0.242685);
+                nPoints     200;
+            }
+            radial_z_minus088
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.034685);
+                end         (0  0.006 0.034685);
+                nPoints     100;
+            }
+            radial_z_minus020
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.002 0.102685);
+                end         (0  0.002 0.102685);
+                nPoints     100;
+            }
+            radial_z_000
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.122685);
+                end         (0  0.006 0.122685);
+                nPoints     100;
+            }
+            radial_z_plus008
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.130685);
+                end         (0  0.006 0.130685);
+                nPoints     100;
+            }
+            radial_z_plus016
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.138685);
+                end         (0  0.006 0.138685);
+                nPoints     100;
+            }
+            radial_z_plus032
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.154685);
+                end         (0  0.006 0.154685);
+                nPoints     100;
+            }
+            radial_z_plus048
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.182685);
+                end         (0  0.006 0.182685);
+                nPoints     100;
+            }
+            radial_z_plus080
+            {
+                type        uniform;
+                axis        y;
+                start       (0 -0.006 0.202685);
+                end         (0  0.006 0.202685);
+                nPoints     100;
+            }
+        );
+    }
+}
+
+// ************************************************************************* //

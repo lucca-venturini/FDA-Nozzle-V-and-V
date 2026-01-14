@@ -1,0 +1,65 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// FDA Nozzle Benchmark - Case 1 (Re = 500, Laminar)
+// Uniform inlet velocity (simple BC, no custom profile)
+//
+// U_avg = 0.04604 m/s (from Q = 5.20624e-6 m³/s)
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0.04604);
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform (0 0 0.04604);
+    }
+    
+    outlet
+    {
+        type            zeroGradient;
+    }
+    
+    wallInlet
+    {
+        type            noSlip;
+    }
+    
+    wallCollector
+    {
+        type            noSlip;
+    }
+    
+    wallThroat
+    {
+        type            noSlip;
+    }
+    
+    wallOutlet
+    {
+        type            noSlip;
+    }
+    
+    stepExpansion
+    {
+        type            noSlip;
+    }
+}
+
+// ************************************************************************* //
